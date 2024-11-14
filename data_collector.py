@@ -27,9 +27,18 @@ class DataCollector:
         :param collection_type: Type of data to collect ('normal', 'attack', 'synthetic')
         :param duration: Duration in seconds for which to collect data 
         """
-
+        if collection_type not in self.collectors:
+            self.logger.error(f'Invalid collection type: {collection_type}')
+            raise Exception("Invalid collector")
+        
+        self.logger.info(f"Capturing {collection_type} traffic for {duration} seconds")
         collector = self.collectors.get(collection_type)
-        data = await collector(duration)
+        try:
+            data = await collector(duration)
+            self.logger.info(f'Data Collected for {collection_type} traffic for {duration} seconds successfully')
+        except Exception as e:
+            self.logger.exception(f"Error occured during data collection for type {collection_type}", exc_info=e)
+        
         self._save_data(data, collection_type)
 
     def _save_data(self, data: pd.DataFrame, collection_type: str) -> None:
@@ -39,7 +48,11 @@ class DataCollector:
         :param data: DataFrame of collected network traffic
         :param collection_type: Type of collected data (for file naming)
         """
-        data.to_csv(f'{self.save_path}/{collection_type}_data.csv')
+        self.logger.info("Saving captured traffic")
+        try:
+            data.to_csv(f'{self.save_path}/{collection_type}_data.csv')
+        except IsADirectoryError as d:
+            self.logger.exception("Failed to save data", exc_info=d)
 
     def _setup_logger(self) -> None:
         """
