@@ -17,6 +17,9 @@ class DataCollector:
             'synthetic': self._generate_synthetic_data
         }
 
+        # Initialize Logger
+        self._setup_logger()
+
     async def collect_data(self, collection_type: str, duration: int) -> None:
         """
         To collect specific type of data
@@ -37,3 +40,16 @@ class DataCollector:
         :param collection_type: Type of collected data (for file naming)
         """
         data.to_csv(f'{self.save_path}/{collection_type}_data.csv')
+
+    def _setup_logger(self) -> None:
+        """
+        Configure logging settings
+        """
+        self.logger = logging.getLogger(__name__)
+        self.logger.setLevel(logging.INFO)
+
+        handler = logging.FileHandler('logs/collectorlog.log')
+        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+        handler.setFormatter(formatter)
+
+        self.logger.addHandler(handler)
