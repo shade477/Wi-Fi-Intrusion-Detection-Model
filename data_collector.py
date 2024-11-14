@@ -2,6 +2,13 @@ import logging.handlers
 import pandas as pd
 import logging
 
+"""
+DataCollector: Collect and handle different types of network traffic collection
+- Normal traffic: Traffic from regular network traffic
+- Attack traffic: Malicious traffic
+- Synthetic Data: Traffic generated to balance classes or enhance training data volume
+"""
+
 class DataCollector:
     
     def __init__(self, save_path: str) -> None:
