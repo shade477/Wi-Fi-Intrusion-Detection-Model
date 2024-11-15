@@ -1,6 +1,6 @@
-import logging.handlers
 import pandas as pd
 import logging
+import pyshark
 
 """
 DataCollector: Collect and handle different types of network traffic collection
@@ -73,3 +73,5 @@ class DataCollector:
         handler.setFormatter(formatter)
 
         self.logger.addHandler(handler)
+
+    # def _collect_normal_traffic(self) -> 
