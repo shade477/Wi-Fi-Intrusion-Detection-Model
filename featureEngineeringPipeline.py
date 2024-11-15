@@ -71,6 +71,18 @@ class FeatureEngineeringPipeline:
 
         return data['pps']
     
+    def _calculate_burst_rate(self, data: pd.DataFrame) -> pd.DataFrame:
+        pass
+
+    def _calculate_iat(self, data: pd.DataFrame) -> pd.DataFrame:
+        pass
+
+    def _create_statistical_features(self, data: pd.DataFrame) -> pd.DataFrame:
+        pass
+
+    def _create_protocol_features(self, data: pd.DataFrame) -> pd.DataFrame:
+        pass
+    
     def __load_dataset(self) -> None:
         self.testing_set = pd.read_csv('kaggle/input/UNSW_NB15_testing-set.csv')
         self.training_set = pd.read_csv('kaggle/input/UNSW_NB15_training-set.csv')
